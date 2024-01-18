@@ -1,0 +1,16 @@
+[
+  {
+    "modid": "iodsave",
+    "name": "IODSave",
+    "description": "Save imgur links easily",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ["adam"],
+    "credits": "The Forge and FML guys",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
