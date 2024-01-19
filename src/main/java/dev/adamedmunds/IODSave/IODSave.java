@@ -2,6 +2,10 @@ package dev.adamedmunds.IODSave;
 
 
 import com.google.gson.Gson;
+import dev.adamedmunds.IODSave.Commands.RemoveImage;
+import dev.adamedmunds.IODSave.Commands.SaveImage;
+import dev.adamedmunds.IODSave.Commands.SendImage;
+import dev.adamedmunds.IODSave.Commands.ShowImages;
 import dev.adamedmunds.IODSave.JSON.JsonFileFormat;
 import dev.adamedmunds.IODSave.JSON.LinkObject;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -49,6 +53,7 @@ public class IODSave {
         ClientCommandHandler.instance.registerCommand(new SaveImage());
         ClientCommandHandler.instance.registerCommand(new SendImage());
         ClientCommandHandler.instance.registerCommand(new RemoveImage());
+        ClientCommandHandler.instance.registerCommand(new ShowImages());
         this.LoadJson();
     }
 
@@ -57,9 +62,6 @@ public class IODSave {
             FileReader reader = new FileReader(jsonFile);
             JsonFileFormat result = gson.fromJson(reader, JsonFileFormat.class);
             links = result.getLinks();
-            for (LinkObject o: links) {
-                System.out.println(o.getName() + " : " + o.getLink());
-            }
             reader.close();
         } catch (Exception e) {
             e.printStackTrace();

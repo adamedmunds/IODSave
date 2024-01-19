@@ -1,5 +1,6 @@
-package dev.adamedmunds.IODSave;
+package dev.adamedmunds.IODSave.Commands;
 
+import dev.adamedmunds.IODSave.IODSave;
 import dev.adamedmunds.IODSave.JSON.JsonFileFormat;
 import dev.adamedmunds.IODSave.JSON.LinkObject;
 import net.minecraft.command.ICommandSender;

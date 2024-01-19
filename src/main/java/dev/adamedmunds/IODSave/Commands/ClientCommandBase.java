@@ -1,4 +1,4 @@
-package dev.adamedmunds.IODSave;
+package dev.adamedmunds.IODSave.Commands;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
