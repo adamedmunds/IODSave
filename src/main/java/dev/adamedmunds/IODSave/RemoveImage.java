@@ -1,17 +1,12 @@
 package dev.adamedmunds.IODSave;
 
-import net.minecraft.client.Minecraft;
+import dev.adamedmunds.IODSave.JSON.JsonFileFormat;
+import dev.adamedmunds.IODSave.JSON.LinkObject;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
-import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
 
 public class RemoveImage extends ClientCommandBase {
 
@@ -20,7 +15,6 @@ public class RemoveImage extends ClientCommandBase {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void processCommand(ICommandSender sender, String[] args) {
         if (args.length != 1) {
             ChatComponentText message = new ChatComponentText(EnumChatFormatting.RED + "Format: /iodsend <name>");
@@ -29,18 +23,17 @@ public class RemoveImage extends ClientCommandBase {
         }
 
         String name = args[0];
-        JSONObject tempRemoveObject = new JSONObject();
-        for (Object genericObject: IODSave.links) {
-            JSONObject linkObject = (JSONObject) genericObject;
-            if (linkObject.get("name").equals(name)) {
-               tempRemoveObject.put("name", name);
-               tempRemoveObject.put("link", linkObject.get("link"));
+        LinkObject tempRemoveObject = new LinkObject();
+
+        for (LinkObject linkObject : IODSave.links) {
+            if (linkObject.getName().equals(name)) {
+                tempRemoveObject.setName(name);
+                tempRemoveObject.setLink(linkObject.getLink());
                 IODSave.links.remove(tempRemoveObject);
+                JsonFileFormat fileFormat = new JsonFileFormat();
+                fileFormat.setLinks(IODSave.links);
                 try {
-                    URL file = IODSave.class.getClassLoader().getResource("data.json");
-                    FileWriter writer = new FileWriter(file.getFile());
-                    writer.write(IODSave.links.toJSONString());
-                    writer.flush();
+                    IODSave.gson.toJson(fileFormat, new FileWriter(IODSave.jsonFile));
                     return;
                 } catch (Exception e) {
                     e.printStackTrace();

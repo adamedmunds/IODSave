@@ -13,10 +13,6 @@ buildscript {
     }
 }
 
-plugins {
-    id 'com.github.johnrengelman.shadow' version '1.2.4'
-}
-
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 
@@ -39,13 +35,10 @@ minecraft {
 
 
 repositories {
-    mavenCentral()
 }
 
 dependencies {
     // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple\
-    compile 'com.googlecode.json-simple:json-simple:1.1.1'
-
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
@@ -87,20 +80,4 @@ processResources
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
-}
-
-shadowJar {
-    // Only shadow fluent-hc
-    dependencies {
-        include(dependency('com.googlecode.json-simple:json-simple:1.1.1'))
-    }
-
-    // Relocate fluent-hc to prevent conflicts with other mods that include it
-    relocate 'com.googlecode.json-simple', 'dev.adamedmunds.IODsave.repack.com.googlecode.json-simple'
-
-    classifier '' // Replace the default JAR
-}
-
-reobf {
-    shadowJar {} // Reobfuscate the shadowed JAR
 }
