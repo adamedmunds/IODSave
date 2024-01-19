@@ -24,17 +24,15 @@ public class RemoveImage extends ClientCommandBase {
         }
 
         String name = args[0];
-        LinkObject tempRemoveObject = new LinkObject();
-
         for (LinkObject linkObject : IODSave.links) {
             if (linkObject.getName().equals(name)) {
-                tempRemoveObject.setName(name);
-                tempRemoveObject.setLink(linkObject.getLink());
-                IODSave.links.remove(tempRemoveObject);
+                IODSave.links.remove(linkObject);
                 JsonFileFormat fileFormat = new JsonFileFormat();
                 fileFormat.setLinks(IODSave.links);
                 try {
-                    IODSave.gson.toJson(fileFormat, new FileWriter(IODSave.jsonFile));
+                    FileWriter writer = new FileWriter(IODSave.jsonFile);
+                    IODSave.gson.toJson(fileFormat, writer);
+                    writer.close();
                     return;
                 } catch (Exception e) {
                     e.printStackTrace();
